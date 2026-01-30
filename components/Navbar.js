@@ -1,61 +1,40 @@
-
 import React from 'react';
 
 const h = React.createElement;
 
 const Navbar = ({ onSearch, onHomeClick }) => {
-  return h('nav', { className: "sticky top-0 z-50 bg-[#0a0a0c]/80 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between" },
+  return h('nav', { className: "sticky top-0 z-50 bg-[#050505]/90 backdrop-blur-xl border-b border-zinc-900 px-6 h-20 flex items-center justify-between" },
     h('div', { 
-      className: "flex items-center gap-2 cursor-pointer group",
+      className: "flex items-center gap-4 cursor-pointer group",
       onClick: onHomeClick
     },
-      h('div', { className: "w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center group-hover:bg-indigo-500 transition-colors shadow-lg" },
+      h('div', { className: "text-xl font-black tracking-tighter uppercase italic text-white" }, "ARKADE")
+    ),
+
+    h('div', { className: "flex flex-1 max-w-md ml-auto relative" },
+      h('input', { 
+        type: "text", 
+        placeholder: "SEARCH LIBRARY", 
+        onChange: (e) => onSearch(e.target.value),
+        className: "w-full bg-zinc-900/50 border border-zinc-800 rounded-none px-4 py-2 focus:outline-none focus:border-zinc-500 transition-all text-[10px] font-bold tracking-widest uppercase text-white placeholder:text-zinc-600"
+      }),
+      h('div', { className: "absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600" },
         h('svg', { 
           xmlns: "http://www.w3.org/2000/svg", 
-          width: "24", 
-          height: "24", 
+          width: "14", 
+          height: "14", 
           viewBox: "0 0 24 24", 
           fill: "none", 
           stroke: "currentColor", 
-          strokeWidth: "2", 
+          strokeWidth: "3", 
           strokeLinecap: "round", 
-          strokeLinejoin: "round", 
-          className: "text-white" 
+          strokeLinejoin: "round"
         },
-          h('polyline', { points: "16 18 22 12 16 6" }),
-          h('polyline', { points: "8 6 2 12 8 18" })
+          h('circle', { cx: "11", cy: "11", r: "8" }),
+          h('line', { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
         )
-      ),
-      h('h1', { className: "text-xl font-extrabold tracking-tighter gaming-font text-white" },
-        "NOVA", h('span', { className: "text-indigo-500" }, "ARCADE")
       )
-    ),
-
-    h('div', { className: "hidden md:flex flex-1 max-w-xl mx-8 relative" },
-      h('input', { 
-        type: "text", 
-        placeholder: "Search for a game...", 
-        onChange: (e) => onSearch(e.target.value),
-        className: "w-full bg-white/5 border border-white/10 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all text-sm"
-      }),
-      h('svg', { 
-        xmlns: "http://www.w3.org/2000/svg", 
-        width: "18", 
-        height: "18", 
-        viewBox: "0 0 24 24", 
-        fill: "none", 
-        stroke: "currentColor", 
-        strokeWidth: "2", 
-        strokeLinecap: "round", 
-        strokeLinejoin: "round", 
-        className: "absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" 
-      },
-        h('circle', { cx: "11", cy: "11", r: "8" }),
-        h('line', { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
-      )
-    ),
-
-    h('button', { className: "bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all" }, "Login")
+    )
   );
 };
 

@@ -23,6 +23,7 @@ const App = () => {
         setGames(data || []);
       } catch (error) {
         console.error('Error loading games:', error);
+        setGames([]);
       } finally {
         setIsLoading(false);
       }
@@ -38,7 +39,7 @@ const App = () => {
     });
   }, [games, searchTerm, activeCategory]);
 
-  return h('div', { className: "min-h-screen pb-20 bg-[#0a0a0c]" },
+  return h('div', { className: "min-h-screen flex flex-col" },
     h(Navbar, { 
       onSearch: setSearchTerm, 
       onHomeClick: () => {
@@ -47,43 +48,33 @@ const App = () => {
       }
     }),
 
-    // Hero Section
-    h('section', { className: "relative h-[400px] flex items-center justify-center overflow-hidden border-b border-white/5" },
-      h('div', { className: "absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900/20 via-transparent to-transparent" }),
-      h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" }),
-      h('div', { className: "relative z-10 text-center px-6 max-w-3xl" },
-        h('span', { className: "inline-block px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-4" }, "Curated Content"),
-        h('h2', { className: "text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight gaming-font" }, 
-          "NOVA", h('span', { className: "text-indigo-500" }, "ARCADE")
-        ),
-        h('p', { className: "text-gray-400 text-lg mb-8 max-w-xl mx-auto" }, "Your personal portal to unblocked high-performance web gaming."),
-        h('button', { 
-          onClick: () => setActiveCategory(GameCategory.ALL),
-          className: "px-12 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold transition-all shadow-lg shadow-indigo-600/20"
-        }, "Browse Library")
-      )
-    ),
+    h('main', { className: "flex-1 max-w-7xl mx-auto w-full px-6 pt-12" },
+      // Hero Section - Minimalist
+      h('header', { className: "mb-20 text-center py-12" },
+        h('h2', { className: "text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 text-white uppercase italic" }, "ARKADE"),
+        h('p', { className: "text-zinc-500 text-lg max-w-lg mx-auto font-medium" }, "The definitive collection of unblocked web experiences. Clean, fast, and focused.")
+      ),
 
-    h('main', { className: "max-w-7xl mx-auto px-6 mt-12" },
-      isLoading ? h('div', { className: "flex flex-col items-center justify-center py-20 space-y-4" },
-        h('div', { className: "w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" }),
-        h('p', { className: "text-gray-500 font-medium animate-pulse" }, "Scanning Database...")
+      isLoading ? h('div', { className: "flex flex-col items-center justify-center py-20" },
+        h('div', { className: "w-8 h-8 border-2 border-white/10 border-t-white rounded-full animate-spin" })
       ) : h(React.Fragment, null,
-        h('div', { className: "flex flex-wrap gap-3 mb-12" },
+        // Categories
+        h('div', { className: "flex flex-wrap justify-center gap-2 mb-16" },
           Object.values(GameCategory).map((cat) => 
             h('button', {
               key: cat,
               onClick: () => setActiveCategory(cat),
-              className: `px-5 py-2 rounded-full text-sm font-bold transition-all border ${
+              className: `px-6 py-2 rounded-full text-xs font-bold transition-all border ${
                 activeCategory === cat 
-                  ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20' 
-                  : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10'
+                  ? 'bg-white border-white text-black' 
+                  : 'bg-transparent border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300'
               }`
-            }, cat)
+            }, cat.toUpperCase())
           )
         ),
 
-        h('div', { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" },
+        // Game Grid
+        h('div', { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" },
           filteredGames.length > 0 ? filteredGames.map((game) => 
             h(GameCard, { 
               key: game.id, 
@@ -91,22 +82,19 @@ const App = () => {
               onClick: (g) => setSelectedGame(g) 
             })
           ) : h('div', { className: "col-span-full py-32 text-center" }, 
-              h('div', { className: "w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6" },
-                h('svg', { xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round", className: "text-gray-600" },
-                  h('rect', { width: "18", height: "18", x: "3", y: "3", rx: "2" }),
-                  h('path', { d: "M3 9h18" }),
-                  h('path', { d: "M9 21V9" })
-                )
+              h('div', { className: "inline-flex items-center justify-center w-12 h-12 rounded-full border border-zinc-800 mb-6" },
+                h('div', { className: "w-2 h-2 bg-zinc-700 rounded-full" })
               ),
-              h('h3', { className: "text-white font-bold text-xl mb-2" }, "Vault is Empty"),
-              h('p', { className: "text-gray-500 max-w-sm mx-auto" }, "There are currently no games in the library. Check back soon for new additions.")
+              h('h3', { className: "text-zinc-400 font-medium text-sm tracking-widest uppercase mb-2" }, "Library currently empty"),
+              h('p', { className: "text-zinc-600 text-xs max-w-xs mx-auto" }, "We are hand-curating new titles. Please check back later.")
           )
         )
       )
     ),
 
-    h('footer', { className: "mt-24 border-t border-white/5 py-12 text-center text-gray-600 text-[10px] uppercase tracking-widest font-bold" }, 
-      "\u00A9 2024 NOVAARCADE."
+    h('footer', { className: "mt-auto border-t border-zinc-900 py-12 flex flex-col items-center gap-4" }, 
+      h('span', { className: "text-[10px] uppercase tracking-[0.4em] font-black text-zinc-700" }, "ARKADE"),
+      h('div', { className: "text-[10px] font-medium text-zinc-500 uppercase tracking-widest" }, "© 2024 • Built for Performance")
     ),
 
     selectedGame && h(GameViewer, { 
