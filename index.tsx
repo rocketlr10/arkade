@@ -1,2 +1,2 @@
 
-// Redundant to index.js
+import './index.js';

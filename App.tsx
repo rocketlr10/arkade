@@ -1,2 +1,2 @@
 
-// Redundant to App.js
+// Redundant. Use App.js
