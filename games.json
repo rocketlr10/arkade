@@ -33,5 +33,19 @@
     "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-donuteria/index.html",
     "thumbnail": "https://i.ibb.co/3yqQyHCW/Papa-s-Donuteria-To-Go.webp",
     "category": "Papas"
+  },
+  {
+    "id": "papa's-sushiria",
+    "title": "PAPA'S SUSHIRIA",
+    "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-sushiria/index.html",
+    "thumbnail": "https://i.ibb.co/xth40VWN/papas-sushiria.jpg",
+    "category": "Papas"
+  },
+  {
+    "id": "papa's-bakeria",
+    "title": "PAPA'S BAKERIA",
+    "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-bakeria/index.html",
+    "thumbnail": "https://i.ibb.co/Rp2DH7FT/image.png",
+    "category": "Papas"
   }
 ]
