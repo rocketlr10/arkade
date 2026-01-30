@@ -54,5 +54,12 @@
     "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-scooperia/index.html",
     "thumbnail": "https://i.ibb.co/4wxfKmmK/image.png",
     "category": "Papas"
+  },
+  {
+    "id": "papa's-pancakeria",
+    "title": "Papa's Pancakeria",
+    "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-pancakeria/index.html",
+    "thumbnail": "https://i.ibb.co/zhdrbsgV/image.png",
+    "category": "Papas"
   }
 ]
