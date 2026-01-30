@@ -91,7 +91,7 @@ const AdminPanel = ({ isOpen, onClose, onAddGame, onReset, onDeleteSessionGame, 
                     onChange: e => setCategory(e.target.value),
                     className: "w-full bg-zinc-900/50 border border-zinc-800 p-3 text-xs text-white focus:outline-none" 
                   },
-                    ['Arcade', 'Action', 'Puzzle', 'Sports', 'Classic'].map(cat => h('option', { key: cat, value: cat }, cat))
+                    ['Arcade', 'Action', 'Puzzle', 'Sports', 'Classic', 'Papas'].map(cat => h('option', { key: cat, value: cat }, cat))
                   )
                 ),
                 h('div', null,
