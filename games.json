@@ -6,5 +6,33 @@
     "url": "https://unblocked-games.s3.amazonaws.com/games/2023/ovo/index.html",
     "thumbnail": "https://images.unsplash.com/photo-1614294148960-9aa740632a87?q=80&w=800&auto=format&fit=crop",
     "category": "Arcade"
+  },
+  {
+    "id": "slope",
+    "title": "Slope",
+    "url": "https://kdata1.com/2020/05/slope/",
+    "thumbnail": "https://images.unsplash.com/photo-1616091093714-c64882e9ab55?q=80&w=800&auto=format&fit=crop",
+    "category": "Arcade"
+  },
+  {
+    "id": "1v1-lol",
+    "title": "1v1.LOL",
+    "url": "https://1v1.lol/",
+    "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop",
+    "category": "Action"
+  },
+  {
+    "id": "tunnel-rush",
+    "title": "Tunnel Rush",
+    "url": "https://unblocked-games.s3.amazonaws.com/tunnel-rush.html",
+    "thumbnail": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop",
+    "category": "Arcade"
+  },
+  {
+    "id": "retro-bowl",
+    "title": "Retro Bowl",
+    "url": "https://game312154.konggames.com/gamez/0031/2154/live/index.html",
+    "thumbnail": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?q=80&w=800&auto=format&fit=crop",
+    "category": "Sports"
   }
 ]

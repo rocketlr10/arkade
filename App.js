@@ -4,6 +4,7 @@ import { GameCategory } from './constants.js';
 import Navbar from './components/Navbar.js';
 import GameCard from './components/GameCard.js';
 import GameViewer from './components/GameViewer.js';
+import AdminPanel from './components/AdminPanel.js';
 
 const h = React.createElement;
 
@@ -13,22 +14,38 @@ const App = () => {
   const [activeCategory, setActiveCategory] = useState(GameCategory.ALL);
   const [selectedGame, setSelectedGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
+  const loadAllGames = async () => {
+    try {
+      const response = await fetch('./games.json');
+      if (!response.ok) throw new Error('Failed to load games data');
+      const data = await response.json();
+      
+      const localGames = JSON.parse(localStorage.getItem('arkade_custom_games') || '[]');
+      
+      const combined = [...data, ...localGames];
+      const unique = combined.reduce((acc, current) => {
+        const x = acc.find(item => item.id === current.id);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+
+      setGames(unique);
+    } catch (error) {
+      console.error('Error loading games:', error);
+      setGames([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await fetch('./games.json');
-        if (!response.ok) throw new Error('Failed to load games data');
-        const data = await response.json();
-        setGames(data || []);
-      } catch (error) {
-        console.error('Error loading games:', error);
-        setGames([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchGames();
+    loadAllGames();
   }, []);
 
   const filteredGames = useMemo(() => {
@@ -38,6 +55,35 @@ const App = () => {
       return matchesSearch && matchesCategory;
     });
   }, [games, searchTerm, activeCategory]);
+
+  const handleFooterClick = () => {
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    if (newCount >= 5) {
+      setIsAdminOpen(true);
+      setClickCount(0);
+    }
+  };
+
+  const handleAddGame = (newGame) => {
+    const localGames = JSON.parse(localStorage.getItem('arkade_custom_games') || '[]');
+    localStorage.setItem('arkade_custom_games', JSON.stringify([...localGames, newGame]));
+    loadAllGames();
+  };
+
+  const handleDeleteSessionGame = (id) => {
+    const localGames = JSON.parse(localStorage.getItem('arkade_custom_games') || '[]');
+    const updated = localGames.filter(g => g.id !== id);
+    localStorage.setItem('arkade_custom_games', JSON.stringify(updated));
+    loadAllGames();
+  };
+
+  const handleReset = () => {
+    if (confirm('Clear all custom session games?')) {
+      localStorage.removeItem('arkade_custom_games');
+      loadAllGames();
+    }
+  };
 
   return h('div', { className: "min-h-screen flex flex-col" },
     h(Navbar, { 
@@ -49,7 +95,6 @@ const App = () => {
     }),
 
     h('main', { className: "flex-1 max-w-7xl mx-auto w-full px-6 pt-12" },
-      // Hero Section - Minimalist
       h('header', { className: "mb-20 text-center py-12" },
         h('h2', { className: "text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 text-white uppercase italic" }, "ARKADE"),
         h('p', { className: "text-zinc-500 text-lg max-w-lg mx-auto font-medium" }, "The definitive collection of unblocked web experiences. Clean, fast, and focused.")
@@ -58,13 +103,12 @@ const App = () => {
       isLoading ? h('div', { className: "flex flex-col items-center justify-center py-20" },
         h('div', { className: "w-8 h-8 border-2 border-white/10 border-t-white rounded-full animate-spin" })
       ) : h(React.Fragment, null,
-        // Categories
         h('div', { className: "flex flex-wrap justify-center gap-2 mb-16" },
           Object.values(GameCategory).map((cat) => 
             h('button', {
               key: cat,
               onClick: () => setActiveCategory(cat),
-              className: `px-6 py-2 rounded-full text-xs font-bold transition-all border ${
+              className: `px-6 py-2 rounded-full text-[10px] font-black tracking-widest transition-all border ${
                 activeCategory === cat 
                   ? 'bg-white border-white text-black' 
                   : 'bg-transparent border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300'
@@ -73,8 +117,7 @@ const App = () => {
           )
         ),
 
-        // Game Grid
-        h('div', { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" },
+        h('div', { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20" },
           filteredGames.length > 0 ? filteredGames.map((game) => 
             h(GameCard, { 
               key: game.id, 
@@ -92,14 +135,26 @@ const App = () => {
       )
     ),
 
-    h('footer', { className: "mt-auto border-t border-zinc-900 py-12 flex flex-col items-center gap-4" }, 
-      h('span', { className: "text-[10px] uppercase tracking-[0.4em] font-black text-zinc-700" }, "ARKADE"),
-      h('div', { className: "text-[10px] font-medium text-zinc-500 uppercase tracking-widest" }, "© 2024 • Built for Performance")
+    h('footer', { className: "mt-auto border-t border-zinc-900 py-12 flex flex-col items-center gap-4 bg-zinc-900/10" }, 
+      h('span', { 
+        className: "text-[10px] uppercase tracking-[0.4em] font-black text-zinc-700 cursor-default select-none transition-colors hover:text-zinc-500",
+        onClick: handleFooterClick
+      }, "ARKADE"),
+      h('div', { className: "text-[9px] font-black text-zinc-600 uppercase tracking-[0.2em]" }, "© 2024 • SYSTEM_VERSION_1.0.4")
     ),
 
     selectedGame && h(GameViewer, { 
       game: selectedGame, 
       onClose: () => setSelectedGame(null) 
+    }),
+
+    h(AdminPanel, { 
+      isOpen: isAdminOpen, 
+      onClose: () => setIsAdminOpen(false),
+      onAddGame: handleAddGame,
+      onReset: handleReset,
+      onDeleteSessionGame: handleDeleteSessionGame,
+      currentGames: games
     })
   );
 };
