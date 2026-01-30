@@ -5,5 +5,6 @@ export const GameCategory = {
   ARCADE: 'Arcade',
   SPORTS: 'Sports',
   CLASSIC: 'Classic',
+  PAPAS: 'Papas',
   ALL: 'All'
 };
