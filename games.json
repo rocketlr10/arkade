@@ -26,5 +26,12 @@
     "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/more2/five-nights-at-freddys/fnaf/index.html",
     "thumbnail": "https://i.ibb.co/Jj0rHZyq/fnaf.avif",
     "category": "Classic"
+  },
+  {
+    "id": "papa's-donuteria",
+    "title": "PAPA'S DONUTERIA",
+    "url": "https://d23tskfudfp1j.cloudfront.net/games/2024/flash/papas-donuteria/index.html",
+    "thumbnail": "https://i.ibb.co/3yqQyHCW/Papa-s-Donuteria-To-Go.webp",
+    "category": "Classic"
   }
 ]
