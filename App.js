@@ -140,7 +140,7 @@ const App = () => {
         className: "text-[10px] uppercase tracking-[0.4em] font-black text-zinc-700 cursor-default select-none transition-colors hover:text-zinc-500",
         onClick: handleFooterClick
       }, "ARKADE"),
-      h('div', { className: "text-[9px] font-black text-zinc-600 uppercase tracking-[0.2em]" }, "© 2024 • SYSTEM_VERSION_1.0.4")
+      h('div', { className: "text-[9px] font-black text-zinc-600 uppercase tracking-[0.2em]" }, "© 2026 • Version 1 :>")
     ),
 
     selectedGame && h(GameViewer, { 
